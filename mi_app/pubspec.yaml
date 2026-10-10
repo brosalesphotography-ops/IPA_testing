@@ -1,0 +1,54 @@
+name: mi_app
+description: "PALOMITOPTY BOOTH - Photo Booth para eventos"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.13.4
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # Cámara
+  camera: ^0.11.2+1
+
+  # Guardar fotografías en la galería
+  gal: ^2.3.3
+
+  # Seleccionar fotografías, marcos y logos
+  image_picker: ^1.2.3
+
+  # Procesamiento de imágenes
+  image: ^4.10.1
+
+  # Archivos temporales
+  path_provider: ^2.1.6
+
+  # Crear PDF
+  pdf: ^3.13.1
+
+  # Impresión
+  printing: ^5.15.1
+
+  # Compartir fotografías
+  share_plus: ^13.3.0
+
+  # Códigos QR
+  qr_flutter: ^4.1.0
+
+  # Iconos iOS
+  cupertino_icons: ^1.0.8
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/palomitopty_logo.png
