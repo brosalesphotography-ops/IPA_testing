@@ -1,3 +1,4 @@
+
 name: iOS-ipa-build
 
 on:
@@ -8,7 +9,7 @@ on:
 
 jobs:
   build-ios:
-    name: 🎉 iOS Build
+    name: iOS Build
     runs-on: macos-latest
 
     steps:
@@ -20,36 +21,23 @@ jobs:
         with:
           channel: stable
 
-      - name: Verify Flutter project
+      - name: Verify iOS project
         run: |
-          pwd
-          ls -la
-          ls -la mi_app
           test -f mi_app/pubspec.yaml
+          test -d mi_app/ios/Runner.xcodeproj
+          ls -la mi_app/ios
 
       - name: Get Flutter dependencies
         working-directory: mi_app
         run: flutter pub get
 
-      - name: Install CocoaPods dependencies
-        working-directory: mi_app/ios
-        run: pod install --repo-update
-
-      - name: Build iOS
+      - name: Build IPA
         working-directory: mi_app
-        run: flutter build ios --release --no-codesign
-
-      - name: Create IPA package
-        working-directory: mi_app
-        run: |
-          mkdir -p build/ios/iphoneos/Payload
-          cp -R build/ios/iphoneos/Runner.app build/ios/iphoneos/Payload/
-          cd build/ios/iphoneos
-          zip -r FlutterIpaExport.ipa Payload
+        run: flutter build ipa --release --no-codesign
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
           name: FlutterIpaExport
-          path: mi_app/build/ios/iphoneos/FlutterIpaExport.ipa
+          path: mi_app/build/ios/ipa/*.ipa
           if-no-files-found: error
