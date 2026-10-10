@@ -20,7 +20,7 @@ jobs:
         with:
           channel: stable
 
-      - name: Verify iOS project
+      - name: Verify Flutter project
         run: |
           test -f mi_app/pubspec.yaml
           test -d mi_app/ios/Runner.xcodeproj
@@ -30,9 +30,16 @@ jobs:
         working-directory: mi_app
         run: flutter pub get
 
-      - name: Build IPA
+      - name: Build iOS App
         working-directory: mi_app
-        run: flutter build ipa --release --no-codesign
+        run: flutter build ios --release --no-codesign
+
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p mi_app/build/ios/ipa/Payload
+          cp -R mi_app/build/ios/iphoneos/Runner.app mi_app/build/ios/ipa/Payload/
+          cd mi_app/build/ios/ipa
+          zip -r Runner-unsigned.ipa Payload
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
